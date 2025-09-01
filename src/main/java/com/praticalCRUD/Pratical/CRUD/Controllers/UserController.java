@@ -1,13 +1,11 @@
 package com.praticalCRUD.Pratical.CRUD.Controllers;
 
 import com.praticalCRUD.Pratical.CRUD.Dtos.ApiResponseDto;
-import com.praticalCRUD.Pratical.CRUD.Dtos.ApiResponsePaginate;
 import com.praticalCRUD.Pratical.CRUD.Dtos.UserDto.Requests.CreateUserDto;
 import com.praticalCRUD.Pratical.CRUD.Dtos.UserDto.Requests.UpdateUserDto;
 import com.praticalCRUD.Pratical.CRUD.Models.User;
 import com.praticalCRUD.Pratical.CRUD.Services.UserService;
 import jakarta.validation.Valid;
-import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

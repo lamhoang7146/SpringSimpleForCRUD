@@ -1,16 +1,11 @@
 package com.praticalCRUD.Pratical.CRUD.Services;
 
 import com.praticalCRUD.Pratical.CRUD.Dtos.ApiResponseDto;
-import com.praticalCRUD.Pratical.CRUD.Dtos.ApiResponsePaginate;
 import com.praticalCRUD.Pratical.CRUD.Dtos.UserDto.Requests.CreateUserDto;
 import com.praticalCRUD.Pratical.CRUD.Dtos.UserDto.Requests.UpdateUserDto;
 import com.praticalCRUD.Pratical.CRUD.Models.User;
 import com.praticalCRUD.Pratical.CRUD.Repositories.UserRepository;
 import com.praticalCRUD.Pratical.CRUD.Ultils.ResponseHelper;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
