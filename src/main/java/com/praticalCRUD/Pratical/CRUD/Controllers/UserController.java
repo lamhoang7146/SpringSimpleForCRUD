@@ -6,6 +6,7 @@ import com.praticalCRUD.Pratical.CRUD.Dtos.UserDto.Requests.UpdateUserDto;
 import com.praticalCRUD.Pratical.CRUD.Models.User;
 import com.praticalCRUD.Pratical.CRUD.Services.UserService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,8 +22,10 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponseDto<List<User>>> getUsers() {
-        return this.userService.getUsers();
+    public ResponseEntity<ApiResponseDto<Page<User>>> getUsers(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        return this.userService.getUsers(page, size);
     }
 
     @GetMapping("/{id}")
@@ -41,7 +44,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponseDto<Object>> deleteUser(@PathVariable String id){
+    public ResponseEntity<ApiResponseDto<Object>> deleteUser(@PathVariable String id) {
         return this.userService.deleteUser(id);
     }
 }

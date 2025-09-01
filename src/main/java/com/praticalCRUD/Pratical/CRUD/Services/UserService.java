@@ -6,6 +6,9 @@ import com.praticalCRUD.Pratical.CRUD.Dtos.UserDto.Requests.UpdateUserDto;
 import com.praticalCRUD.Pratical.CRUD.Models.User;
 import com.praticalCRUD.Pratical.CRUD.Repositories.UserRepository;
 import com.praticalCRUD.Pratical.CRUD.Ultils.ResponseHelper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -21,8 +24,10 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public ResponseEntity<ApiResponseDto<List<User>>> getUsers() {
-        return ResponseHelper.success(this.userRepository.findAll(), "Get users successfully", HttpStatus.ACCEPTED);
+    public ResponseEntity<ApiResponseDto<Page<User>>> getUsers(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<User> usersPage = userRepository.findAll(pageable);
+        return ResponseHelper.success(usersPage, "Get users successfully", HttpStatus.OK);
     }
 
     public ResponseEntity<ApiResponseDto<User>> getUser(String id) {
@@ -34,7 +39,7 @@ public class UserService {
 
         User user = isUserExists.get();
 
-        return ResponseHelper.success(user, "Get user by id: ", HttpStatus.ACCEPTED);
+        return ResponseHelper.success(user, "Get user by id: ", HttpStatus.OK);
     }
 
     public ResponseEntity<ApiResponseDto<User>> createUser(CreateUserDto createUserDto) {
