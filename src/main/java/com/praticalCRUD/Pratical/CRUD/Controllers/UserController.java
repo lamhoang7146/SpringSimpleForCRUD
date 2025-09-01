@@ -1,6 +1,7 @@
 package com.praticalCRUD.Pratical.CRUD.Controllers;
 
 import com.praticalCRUD.Pratical.CRUD.Dtos.ApiResponseDto;
+import com.praticalCRUD.Pratical.CRUD.Dtos.ApiResponsePaginate;
 import com.praticalCRUD.Pratical.CRUD.Dtos.UserDto.Requests.CreateUserDto;
 import com.praticalCRUD.Pratical.CRUD.Dtos.UserDto.Requests.UpdateUserDto;
 import com.praticalCRUD.Pratical.CRUD.Models.User;
@@ -22,10 +23,9 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponseDto<Page<User>>> getUsers(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
-        return this.userService.getUsers(page, size);
+    public ResponseEntity<ApiResponseDto<List<User>>> getUsers(
+            ) {
+        return this.userService.getUsers();
     }
 
     @GetMapping("/{id}")
