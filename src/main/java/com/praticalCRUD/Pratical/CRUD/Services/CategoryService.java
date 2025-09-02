@@ -29,7 +29,7 @@ public class CategoryService {
         Optional<Category> isCategoryExists = this.categoryRepository.findById(id);
 
         if (isCategoryExists.isEmpty()) {
-            return ResponseHelper.fail(null, "Category not found!", HttpStatus.BAD_REQUEST);
+            return ResponseHelper.fail(null, "Category not found!", HttpStatus.CONFLICT);
         }
 
         return ResponseHelper.success(isCategoryExists.get(), "Get category by id: ", HttpStatus.OK);
@@ -39,12 +39,13 @@ public class CategoryService {
         Optional<Category> isNameExists = this.categoryRepository.findByName(createCategoryDto.getName());
 
         if (isNameExists.isPresent()) {
-            return ResponseHelper.fail(null, "Name category is exists!", HttpStatus.BAD_REQUEST);
+            return ResponseHelper.fail(null, "Name category is exists!", HttpStatus.CONFLICT);
         }
 
         Category category = new Category();
         category.setName(createCategoryDto.getName());
         category.setDescription(createCategoryDto.getDescription());
+        category.setStatus(createCategoryDto.getStatus());
         return ResponseHelper.success(this.categoryRepository.save(category), "Create category successfully!", HttpStatus.OK);
     }
 
@@ -52,7 +53,7 @@ public class CategoryService {
         Optional<Category> isCategoryExists = this.categoryRepository.findById(id);
 
         if (isCategoryExists.isEmpty()) {
-            return ResponseHelper.fail(null, "Category not found!", HttpStatus.BAD_REQUEST);
+            return ResponseHelper.fail(null, "Category not found!", HttpStatus.CONFLICT);
         }
 
         Category category = isCategoryExists.get();
@@ -61,7 +62,7 @@ public class CategoryService {
                 !updateCategoryDto.getName().equals(category.getName()) &&
                 this.categoryRepository.findByName(updateCategoryDto.getName()).isPresent()
         ) {
-            return ResponseHelper.fail(null, "Name category is exists!", HttpStatus.BAD_REQUEST);
+            return ResponseHelper.fail(null, "Name category is exists!", HttpStatus.CONFLICT);
         }
 
         if(updateCategoryDto.getName() != null){
@@ -79,7 +80,7 @@ public class CategoryService {
     public ResponseEntity<ApiResponseDto<Object>> deleteCategory(String id) {
         Optional<Category> isCategoryExists = this.categoryRepository.findById(id);
         if (isCategoryExists.isEmpty()) {
-            return ResponseHelper.fail(null, "Category not found!", HttpStatus.BAD_REQUEST);
+            return ResponseHelper.fail(null, "Category not found!", HttpStatus.CONFLICT);
         }
         this.categoryRepository.delete(isCategoryExists.get());
         return ResponseHelper.success(null, "Delete category successfully!", HttpStatus.OK);
