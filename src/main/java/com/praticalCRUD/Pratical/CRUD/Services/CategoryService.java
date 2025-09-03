@@ -4,6 +4,7 @@ import com.praticalCRUD.Pratical.CRUD.Dtos.ApiResponseDto;
 import com.praticalCRUD.Pratical.CRUD.Dtos.CategoryDto.Requests.CategoryFilterDto;
 import com.praticalCRUD.Pratical.CRUD.Dtos.CategoryDto.Requests.CreateCategoryDto;
 import com.praticalCRUD.Pratical.CRUD.Dtos.CategoryDto.Requests.UpdateCategoryDto;
+import com.praticalCRUD.Pratical.CRUD.Dtos.CategoryDto.Responses.CategoryWithCountDto;
 import com.praticalCRUD.Pratical.CRUD.Models.Category;
 import com.praticalCRUD.Pratical.CRUD.Repositories.CategoryRepository;
 import com.praticalCRUD.Pratical.CRUD.Ultils.ResponseHelper;
@@ -24,8 +25,8 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-    public ResponseEntity<ApiResponseDto<List<Category>>> getCategories(CategoryFilterDto categoryFilterDto) {
-        List<Category> categories = this.categoryRepository.filterCategories(
+    public ResponseEntity<ApiResponseDto<List<CategoryWithCountDto>>> getCategories(CategoryFilterDto categoryFilterDto) {
+        List<CategoryWithCountDto> categories = this.categoryRepository.filterCategoriesWithCount(
                 categoryFilterDto.getName(),
                 categoryFilterDto.getStatus(),
                 categoryFilterDto.getCreatedAtFrom(),
