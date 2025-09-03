@@ -20,6 +20,9 @@ public class Product {
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
+    @Column(name = "image")
+    private String image;
+
     @Column(name = "status")
     private Boolean status = true;
 
@@ -27,7 +30,7 @@ public class Product {
     private BigDecimal price;
 
     @Column(name = "stock")
-    private int stock;
+    private Integer stock;
 
     @Column(name = "created_at", updatable = false)
     @CreationTimestamp
@@ -59,6 +62,14 @@ public class Product {
 
     public String getDescription() {
         return description;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public void setDescription(String description) {

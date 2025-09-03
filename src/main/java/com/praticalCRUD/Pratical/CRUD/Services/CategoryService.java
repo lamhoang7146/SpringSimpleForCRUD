@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class CategoryService {
@@ -71,6 +72,10 @@ public class CategoryService {
 
         if (updateCategoryDto.getDescription() != null) {
             category.setDescription(updateCategoryDto.getDescription());
+        }
+
+        if(updateCategoryDto.getStatus() != null){
+            category.setStatus(updateCategoryDto.getStatus());
         }
 
         Category updatedCategory = this.categoryRepository.save(category);

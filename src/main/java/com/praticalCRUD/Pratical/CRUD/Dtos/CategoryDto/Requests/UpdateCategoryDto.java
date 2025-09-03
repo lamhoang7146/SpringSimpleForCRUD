@@ -12,9 +12,14 @@ public class UpdateCategoryDto {
     @Size(min = 3, max = 30, message = "Description category at least 3 and not exceed 30 characters!")
     private String description;
 
-    public UpdateCategoryDto(String name, String description) {
-        this.name = name;
-        this.description = description;
+    private Boolean status;
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 
     public String getName() {

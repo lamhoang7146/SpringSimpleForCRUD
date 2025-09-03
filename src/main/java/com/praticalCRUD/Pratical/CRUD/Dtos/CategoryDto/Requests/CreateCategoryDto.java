@@ -14,11 +14,6 @@ public class CreateCategoryDto {
 
     private Boolean status;
 
-    public CreateCategoryDto(String name, String description) {
-        this.name = name;
-        this.description = description;
-    }
-
     public Boolean getStatus() {
         return status;
     }
