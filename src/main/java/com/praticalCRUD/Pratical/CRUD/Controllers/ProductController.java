@@ -2,6 +2,7 @@ package com.praticalCRUD.Pratical.CRUD.Controllers;
 
 import com.praticalCRUD.Pratical.CRUD.Dtos.ApiResponseDto;
 import com.praticalCRUD.Pratical.CRUD.Dtos.ProductDto.Requests.CreateProductDto;
+import com.praticalCRUD.Pratical.CRUD.Dtos.ProductDto.Requests.ProductFilterDto;
 import com.praticalCRUD.Pratical.CRUD.Dtos.ProductDto.Requests.UpdateProductDto;
 import com.praticalCRUD.Pratical.CRUD.Models.Category;
 import com.praticalCRUD.Pratical.CRUD.Models.Product;
@@ -21,9 +22,9 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping("/{id}/category")
-    public ResponseEntity<ApiResponseDto<List<Product>>> getProductByCategoryId(@PathVariable String id) {
-        return this.productService.getProductsByCategoryId(id);
+    @GetMapping("/{categoryId}/category")
+    public ResponseEntity<ApiResponseDto<List<Product>>> getProductByCategoryId(@PathVariable Category categoryId, ProductFilterDto productFilterDto) {
+        return this.productService.getProductsByCategoryId(categoryId, productFilterDto);
     }
 
     @GetMapping("/{id}")
@@ -40,8 +41,8 @@ public class ProductController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<ApiResponseDto<Product>> updateProduct( @PathVariable String id, @Valid @RequestBody UpdateProductDto updateProductDto) {
-        return this.productService.updateProduct( id, updateProductDto);
+    public ResponseEntity<ApiResponseDto<Product>> updateProduct(@PathVariable String id, @Valid @RequestBody UpdateProductDto updateProductDto) {
+        return this.productService.updateProduct(id, updateProductDto);
     }
 
     @DeleteMapping("/{id}")

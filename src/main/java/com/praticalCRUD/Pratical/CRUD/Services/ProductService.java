@@ -2,6 +2,7 @@ package com.praticalCRUD.Pratical.CRUD.Services;
 
 import com.praticalCRUD.Pratical.CRUD.Dtos.ApiResponseDto;
 import com.praticalCRUD.Pratical.CRUD.Dtos.ProductDto.Requests.CreateProductDto;
+import com.praticalCRUD.Pratical.CRUD.Dtos.ProductDto.Requests.ProductFilterDto;
 import com.praticalCRUD.Pratical.CRUD.Dtos.ProductDto.Requests.UpdateProductDto;
 import com.praticalCRUD.Pratical.CRUD.Models.Category;
 import com.praticalCRUD.Pratical.CRUD.Models.Product;
@@ -22,8 +23,14 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public ResponseEntity<ApiResponseDto<List<Product>>> getProductsByCategoryId(String categoryId) {
-        return ResponseHelper.success(productRepository.findByCategoryId(categoryId), "Get products successfully!", HttpStatus.OK);
+    public ResponseEntity<ApiResponseDto<List<Product>>> getProductsByCategoryId(Category categoryId, ProductFilterDto productFilterDto) {
+        return ResponseHelper.success(this.productRepository.filterProducts(
+                productFilterDto.getName(),
+                productFilterDto.getStatus(),
+                productFilterDto.getCreatedAtFrom(),
+                productFilterDto.getCreatedAtTo(),
+                categoryId
+        ), "Get products successfully!", HttpStatus.OK);
     }
 
     public ResponseEntity<ApiResponseDto<Product>> getProductById(String id) {
@@ -47,7 +54,11 @@ public class ProductService {
         product.setName(createProductDto.getName());
         product.setPrice(createProductDto.getPrice());
         product.setStock(createProductDto.getStock());
-        product.setStatus(createProductDto.getStatus());
+
+        if (createProductDto.getStatus() != null) {
+            product.setStatus(createProductDto.getStatus());
+        }
+
         product.setDescription(createProductDto.getDescription());
         product.setCategory(category);
         return ResponseHelper.success(this.productRepository.save(product), "Create product successfully!", HttpStatus.OK);
@@ -67,6 +78,8 @@ public class ProductService {
         ) {
             return ResponseHelper.fail(null, "Name product is exists!", HttpStatus.CONFLICT);
         }
+
+        product.setName(updateProductDto.getName());
 
         if (updateProductDto.getDescription() != null) {
             product.setDescription(updateProductDto.getDescription());

@@ -1,6 +1,7 @@
 package com.praticalCRUD.Pratical.CRUD.Services;
 
 import com.praticalCRUD.Pratical.CRUD.Dtos.ApiResponseDto;
+import com.praticalCRUD.Pratical.CRUD.Dtos.CategoryDto.Requests.CategoryFilterDto;
 import com.praticalCRUD.Pratical.CRUD.Dtos.CategoryDto.Requests.CreateCategoryDto;
 import com.praticalCRUD.Pratical.CRUD.Dtos.CategoryDto.Requests.UpdateCategoryDto;
 import com.praticalCRUD.Pratical.CRUD.Models.Category;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -22,8 +24,15 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-    public ResponseEntity<ApiResponseDto<List<Category>>> getCategories() {
-        return ResponseHelper.success(this.categoryRepository.findAll(), "Get categories successfully!", HttpStatus.OK);
+    public ResponseEntity<ApiResponseDto<List<Category>>> getCategories(CategoryFilterDto categoryFilterDto) {
+        List<Category> categories = this.categoryRepository.filterCategories(
+                categoryFilterDto.getName(),
+                categoryFilterDto.getStatus(),
+                categoryFilterDto.getCreatedAtFrom(),
+                categoryFilterDto.getCreatedAtTo()
+        );
+
+        return ResponseHelper.success(categories, "Get categories successfully!", HttpStatus.OK);
     }
 
     public ResponseEntity<ApiResponseDto<Category>> getCategoryById(String id) {
@@ -46,7 +55,11 @@ public class CategoryService {
         Category category = new Category();
         category.setName(createCategoryDto.getName());
         category.setDescription(createCategoryDto.getDescription());
-        category.setStatus(createCategoryDto.getStatus());
+
+        if (createCategoryDto.getStatus() != null) {
+            category.setStatus(createCategoryDto.getStatus());
+        }
+
         return ResponseHelper.success(this.categoryRepository.save(category), "Create category successfully!", HttpStatus.OK);
     }
 
@@ -66,7 +79,7 @@ public class CategoryService {
             return ResponseHelper.fail(null, "Name category is exists!", HttpStatus.CONFLICT);
         }
 
-        if(updateCategoryDto.getName() != null){
+        if (updateCategoryDto.getName() != null) {
             category.setName(updateCategoryDto.getName());
         }
 
@@ -74,7 +87,7 @@ public class CategoryService {
             category.setDescription(updateCategoryDto.getDescription());
         }
 
-        if(updateCategoryDto.getStatus() != null){
+        if (updateCategoryDto.getStatus() != null) {
             category.setStatus(updateCategoryDto.getStatus());
         }
 

@@ -1,6 +1,7 @@
 package com.praticalCRUD.Pratical.CRUD.Controllers;
 
 import com.praticalCRUD.Pratical.CRUD.Dtos.ApiResponseDto;
+import com.praticalCRUD.Pratical.CRUD.Dtos.CategoryDto.Requests.CategoryFilterDto;
 import com.praticalCRUD.Pratical.CRUD.Dtos.CategoryDto.Requests.CreateCategoryDto;
 import com.praticalCRUD.Pratical.CRUD.Dtos.CategoryDto.Requests.UpdateCategoryDto;
 import com.praticalCRUD.Pratical.CRUD.Models.Category;
@@ -21,8 +22,8 @@ public class CategoryController {
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponseDto<List<Category>>> getCategories() {
-        return this.categoryService.getCategories();
+    public ResponseEntity<ApiResponseDto<List<Category>>> getCategories(CategoryFilterDto categoryFilterDto) {
+        return this.categoryService.getCategories(categoryFilterDto);
     }
 
     @GetMapping("/{id}")
